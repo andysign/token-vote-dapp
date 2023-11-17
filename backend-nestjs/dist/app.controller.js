@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
@@ -19,14 +22,69 @@ let AppController = class AppController {
     getHello() {
         return this.appService.getHello();
     }
+    async getBlockNumber() {
+        return this.appService.getBlockNumber();
+    }
+    getContractAddress() {
+        return { result: this.appService.getContractAddress() };
+    }
+    getContractAbi() {
+        return { result: this.appService.getContractAbi() };
+    }
+    async getTokenName() {
+        return { result: await this.appService.getTokenName() };
+    }
+    async getTotalSupply() {
+        return { result: await this.appService.getTotalSupply() };
+    }
+    async checkMinterRole(address) {
+        return { result: await this.appService.checkMinterRole(address) };
+    }
 };
 exports.AppController = AppController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], AppController.prototype, "getHello", null);
+__decorate([
+    (0, common_1.Get)('/block-number'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getBlockNumber", null);
+__decorate([
+    (0, common_1.Get)('/contract-address'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getContractAddress", null);
+__decorate([
+    (0, common_1.Get)('/contract-abi'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getContractAbi", null);
+__decorate([
+    (0, common_1.Get)('/token-name'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getTokenName", null);
+__decorate([
+    (0, common_1.Get)('/total-supply'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getTotalSupply", null);
+__decorate([
+    (0, common_1.Get)('/check-minter-role'),
+    __param(0, (0, common_1.Query)('address')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "checkMinterRole", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
