@@ -1,0 +1,7 @@
+node_modules
+package-lock.json
+
+backend-nestjs/node_modules
+backend-nestjs/package-lock.json
+
+frontend-scaffoldeth/node_modules
