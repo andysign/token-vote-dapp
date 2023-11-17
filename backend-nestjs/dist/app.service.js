@@ -25,7 +25,7 @@ let AppService = class AppService {
         this.contract = new ethers_1.ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
     }
     getHello() {
-        return `Hello There!`;
+        return `Backend App Running OK. Go to .../api/ for more!`;
     }
     async getBlockNumber() {
         const { provider } = this;
