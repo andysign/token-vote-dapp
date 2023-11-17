@@ -1,7 +1,52 @@
 node_modules
 package-lock.json
 
-backend-nestjs/node_modules
 backend-nestjs/package-lock.json
 
 frontend-scaffoldeth/node_modules
+
+
+# compiled output
+backend-nestjs/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+backend-nestjs/logs
+backend-nestjs/*.log
+backend-nestjs/npm-debug.log*
+backend-nestjs/pnpm-debug.log*
+backend-nestjs/yarn-debug.log*
+backend-nestjs/yarn-error.log*
+backend-nestjs/lerna-debug.log*
+
+# OS
+backend-nestjs/.DS_Store
+
+frontend-scaffoldeth/.DS_Store
+
+# Tests
+backend-nestjs//coverage
+backend-nestjs//.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
