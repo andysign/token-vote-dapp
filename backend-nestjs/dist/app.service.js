@@ -17,10 +17,10 @@ const config_1 = require("@nestjs/config");
 let AppService = class AppService {
     constructor(configService) {
         this.configService = configService;
-        this.ctAddr = this.configService.get('TOKEN_ADDRESS', '');
+        this.ctAddr = this.configService.get('TOKEN_ADDRESS');
         this.ctAbi = tokenJson.abi;
-        this.prvKey = process.env['PRIVATE_KEY'];
-        this.provider = new ethers_1.ethers.JsonRpcProvider(process.env['RPC_ENDPOINT_URL']);
+        this.prvKey = this.configService.get('PRIVATE_KEY', process.env.PRIVATE_KEY);
+        this.provider = new ethers_1.ethers.JsonRpcProvider(this.configService.get('RPC_ENDPOINT_URL', process.env.RPC_ENDPOINT_URL));
         this.wallet = new ethers_1.ethers.Wallet(this.prvKey, this.provider);
         this.contract = new ethers_1.ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
     }
