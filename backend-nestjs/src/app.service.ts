@@ -19,9 +19,16 @@ export class AppService {
   constructor(private configService: ConfigService) {
     this.ctAddr = this.configService.get<string>('TOKEN_ADDRESS', '');
     this.ctAbi = tokenJson.abi;
-    this.prvKey = process.env['PRIVATE_KEY'];
-
-    this.provider = new ethers.JsonRpcProvider(process.env['RPC_ENDPOINT_URL']);
+    this.prvKey = this.configService.get<string>(
+      'PRIVATE_KEY',
+      process.env.PRIVATE_KEY,
+    );
+    this.provider = new ethers.JsonRpcProvider(
+      this.configService.get<string>(
+        'RPC_ENDPOINT_URL',
+        process.env.RPC_ENDPOINT_URL,
+      ),
+    );
     this.wallet = new ethers.Wallet(this.prvKey, this.provider);
     this.contract = new ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
   }
@@ -84,72 +91,3 @@ export class AppService {
   //   return tx;
   // }
 }
-
-/*
-import { Injectable } from '@nestjs/common';
-
-import { ethers } from 'ethers';
-
-import * as tokenJson from './assets/MyToken.json'
-
-import { ConfigService } from '@nestjs/config';
-
-@Injectable()
-export class AppService {
-
-  static config: AppService;
-  constructor(private configService: ConfigService) {
-    AppService.config = this;
-  }
-
-  private get contractAddress(): string {
-    return this.configService.get('TOKEN_ADDRESS', '');
-  }
-
-  private get privateKey(): string {
-    return this.configService.get('PRIVATE_KEY', '');
-  }
-
-  private get rpcEndpointUrl(): string {
-    return this.configService.get('RPC_ENDPOINT_URL', '');
-  }
-
-  private get provider() {
-    const rpcEndUrl = AppService.config.rpcEndpointUrl;
-    return new ethers.JsonRpcProvider(rpcEndUrl);
-  }
-
-  private get contractAbi() {
-    return tokenJson.abi;
-  }
-
-  getHello() { // : Promise<string>
-    return `Hello There!`;
-  }
-
-  async getBlockNumber() {
-    const provider = AppService.config.provider;
-    const blockNumber = await provider.getBlockNumber();
-    return blockNumber;
-  }
-
-  getContractAddress() {
-    const ctAddr = AppService.config.contractAddress;
-    return ctAddr;
-  }
-
-  getContractAbi() {
-    return AppService.config.contractAbi;
-  }
-
-  async getTokenName() {
-    const provider = AppService.config.provider;
-    const abi = AppService.config.contractAbi;
-    const addr = AppService.config.contractAddress;
-    const contract = new ethers.Contract(addr, abi, provider);
-    const name = await contract.name();
-    return name;
-  }
-
-}
-*/
