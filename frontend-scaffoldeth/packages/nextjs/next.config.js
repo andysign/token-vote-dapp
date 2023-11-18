@@ -2,6 +2,8 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  assetPrefix: `/token-vote-dapp/`,
+  basePath: `/token-vote-dapp`,
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
@@ -15,6 +17,8 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    // loader: 'imgix',
+    // path: '',
   },
 };
 
