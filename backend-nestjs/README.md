@@ -1,6 +1,4 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Token Ballot Minting and Voting Dapp Backend
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
@@ -19,18 +17,44 @@
     <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
   <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+[![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+---
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Created using [Nest](https://github.com/nestjs/nest) framework.
 
-## Installation
+---
 
-```bash
-$ npm install
+# Description
+
+The first backend version, configured to run on port **`8080`**.
+
+This one has a `Dockerfile`. This docker build is useful because whenever a merge to main happens the a docker container will be build, all the files from **`./distil/`** will be added in it and that docker will become available at **[https://tokenvotedapp-9jc31xz7.b4a.run/](https://tokenvotedapp-9jc31xz7.b4a.run/)** on port **`80`**.
+
+Run with:
+
+```sh
+nano ./.env.development # ADD YOUR KEY AND ALCHEMY API KEY ( eventually edit .env as well and add your own contract )
 ```
+
+```sh
+npm install
+# then
+npm run start
+# OR
+npm run start:dev
+```
+
+Also don't forget, when committing something that needs to go in the _cloud_ to always prepare the files for the container ( **`Dockerfile`** ), therefore always do:
+
+```sh
+npm run build
+```
+
+---
 
 ## Running the app
 
@@ -41,11 +65,15 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+# debug mode
+$ npm run start:debug
 ```
 
+---
+
 ## Test
+
+Although the tests are not done, they can be run with
 
 ```bash
 # unit tests
@@ -58,16 +86,12 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+---
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+--
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+---
