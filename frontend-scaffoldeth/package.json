@@ -27,7 +27,7 @@
     "postinstall": "husky install",
     "precommit": "lint-staged",
     "export": "yarn workspace @se-2/nextjs export",
-    "publish": "yarn workspace @se-2/nextjs publish",
+    "publish": "yarn workspace @se-2/nextjs publish && touch $(npm root)/../../docs/.nojekyll",
     "vercel": "yarn workspace @se-2/nextjs vercel",
     "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
   },
