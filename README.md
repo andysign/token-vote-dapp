@@ -24,7 +24,7 @@
 
 This project is split in back-end and front-end: 1). the front-end can be found in **`./frontend-scaffoldeth`** ; 2). the back-end can be found in **`./backend-nestjs/`**.
 
-The idea is to serve the front-end as a static _html_ file using GitHub pages and at the same time host the back-end in the cloud, as in, more exactly using the **[back4app.com](https://www.back4app.com/)** free cloud platform ( the back-end can be found at: **[https://tokenvotedapp-9jc31xz7.b4a.run/](https://tokenvotedapp-9jc31xz7.b4a.run/)** ).
+The idea is to serve the front-end as a static _html_ file using **[GitHub pages](https://andysign.github.io/token-vote-dapp/) and at the same time host the back-end in the cloud, as in, more exactly using the **[back4app.com](https://www.back4app.com/)** free cloud platform ( the back-end can be found at: **[https://tokenvotedapp-9jc31xz7.b4a.run/](https://tokenvotedapp-9jc31xz7.b4a.run/)** ).
 
 For more information about the front-end read the README file from **[./frontend-scaffoldeth](./frontend-scaffoldeth/)**.
 
