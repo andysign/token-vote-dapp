@@ -46,7 +46,7 @@ export const DeployCard = ({}) => {
         </h2>
         {canDeploy ? (
           <button className="btn btn-active btn-neutral" onClick={deployTokenized}>
-            deploy Tokenized Ballot{" "}
+            deploy Tokenized Ballot with default Proposals
           </button>
         ) : (
           <div>You cannot deploy Tokenized Ballot yet, total supply is inferior to the minimum requested </div>
