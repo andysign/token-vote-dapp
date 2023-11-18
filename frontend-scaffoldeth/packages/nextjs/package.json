@@ -6,6 +6,8 @@
     "dev": "next dev",
     "start": "next dev",
     "build": "next build",
+    "export": "next export -o ../../../docs && touch $(npm root)/../../docs/.nojekyll",
+    "publish": "next build && next export -o ../../../docs && touch $(npm root)/../../docs/.nojekyll",
     "serve": "next start",
     "lint": "next lint",
     "format": "prettier --write . '!(node_modules|.next|contracts)/**/*'",
