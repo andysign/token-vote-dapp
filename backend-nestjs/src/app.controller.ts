@@ -91,4 +91,9 @@ export class AppController {
   getContractBallotAddress() {
     return { result: this.appService.getContractBallotAddress() };
   }
+
+  @Get('/contract-ballot-abi')
+  getContractBallotAbi() {
+    return { result: this.appService.getContractBallotAbi() };
+  }
 }

@@ -9,6 +9,7 @@ export declare class AppService {
     private wallet;
     private contract;
     private ctbAddr;
+    private ctbAbi;
     constructor(configService: ConfigService);
     getHello(): string;
     getBlockNumber(): Promise<number>;
@@ -25,4 +26,5 @@ export declare class AppService {
         contractAddress: string | ethers.Addressable;
     }>;
     getContractBallotAddress(): any;
+    getContractBallotAbi(): any;
 }

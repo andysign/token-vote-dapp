@@ -41,4 +41,7 @@ export declare class AppController {
     getContractBallotAddress(): {
         result: any;
     };
+    getContractBallotAbi(): {
+        result: any;
+    };
 }
