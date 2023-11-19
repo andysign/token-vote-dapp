@@ -17,7 +17,7 @@ const config_1 = require("@nestjs/config");
 let AppService = class AppService {
     constructor(configService) {
         this.configService = configService;
-        this.ctAddr = this.configService.get('TOKEN_ADDRESS');
+        this.ctAddr = this.configService.get('TOKEN_ADDRESS', process.env.TOKEN_ADDRESS);
         this.ctAbi = tokenJson.abi;
         this.prvKey = this.configService.get('PRIVATE_KEY', process.env.PRIVATE_KEY);
         this.provider = new ethers_1.ethers.JsonRpcProvider(this.configService.get('RPC_ENDPOINT_URL', process.env.RPC_ENDPOINT_URL));
@@ -50,13 +50,21 @@ let AppService = class AppService {
         const totalSupply = totalSupplyBN.toString();
         return totalSupply;
     }
-    getServerWalletAddress() {
+    getContractCreatorAddress() {
         const addr = this.wallet.address;
         return addr;
     }
-    async checkMinterRole(addr) {
+    async getContractCreatorAddressBalance() {
+        const { provider, wallet } = this;
+        const addr = wallet.address;
+        const balBN = await provider.getBalance(addr);
+        const bal = balBN.toString();
+        return bal;
+    }
+    async checkMinterRole(a) {
         const { contract } = this;
-        const addrFinal = addr || this.wallet.getAddress();
+        const { ZeroAddress: zeroAddress } = ethers_1.ethers;
+        const addrFinal = a !== zeroAddress ? a : await this.wallet.getAddress();
         const { keccak256, toUtf8Bytes } = ethers_1.ethers;
         const roleUtf8 = toUtf8Bytes('MINTER_ROLE');
         const roleHash = keccak256(roleUtf8);

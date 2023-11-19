@@ -17,7 +17,10 @@ export class AppService {
   private contract: ethers.Contract;
 
   constructor(private configService: ConfigService) {
-    this.ctAddr = this.configService.get<string>('TOKEN_ADDRESS', '');
+    this.ctAddr = this.configService.get<string>(
+      'TOKEN_ADDRESS',
+      process.env.TOKEN_ADDRESS,
+    );
     this.ctAbi = tokenJson.abi;
     this.prvKey = this.configService.get<string>(
       'PRIVATE_KEY',
@@ -65,18 +68,28 @@ export class AppService {
     return totalSupply;
   }
 
-  getServerWalletAddress() {
+  getContractCreatorAddress() {
     const addr = this.wallet.address;
     return addr;
   }
 
-  async checkMinterRole(addr: string) {
+  async getContractCreatorAddressBalance() {
+    const { provider, wallet } = this;
+    const addr = wallet.address;
+    const balBN = await provider.getBalance(addr);
+    const bal = balBN.toString();
+    return bal;
+  }
+
+  async checkMinterRole(a: string) {
     const { contract } = this;
-    const addrFinal = addr || this.wallet.getAddress();
+    const { ZeroAddress: zeroAddress } = ethers;
+    const addrFinal = a !== zeroAddress ? a : await this.wallet.getAddress();
     const { keccak256, toUtf8Bytes } = ethers;
     const roleUtf8 = toUtf8Bytes('MINTER_ROLE');
     const roleHash = keccak256(roleUtf8);
-    const minterRole = roleHash; // '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
+    // role 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
+    const minterRole = roleHash;
     const hasRole = await contract.hasRole(minterRole, addrFinal);
     return hasRole;
   }

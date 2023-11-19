@@ -14,6 +14,7 @@ export declare class AppService {
     getContractAbi(): any;
     getTokenName(): Promise<string>;
     getTotalSupply(): Promise<any>;
-    getServerWalletAddress(): string;
-    checkMinterRole(addr: string): Promise<any>;
+    getContractCreatorAddress(): string;
+    getContractCreatorAddressBalance(): Promise<string>;
+    checkMinterRole(a: string): Promise<any>;
 }
