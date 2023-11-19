@@ -3,7 +3,9 @@ export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
     getHello(): string;
-    getBlockNumber(): Promise<number>;
+    getBlockNumber(): Promise<{
+        result: number;
+    }>;
     getContractAddress(): {
         result: any;
     };
@@ -16,7 +18,13 @@ export declare class AppController {
     getTotalSupply(): Promise<{
         result: any;
     }>;
-    checkMinterRole(address: string): Promise<{
+    getContractCreatorAddress(): {
+        result: string;
+    };
+    getContractCreatorAddressBalance(): Promise<{
+        result: string;
+    }>;
+    checkMinterRole(address?: string): Promise<{
         result: any;
     }>;
 }

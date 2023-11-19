@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 // import { Body, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ApiQuery } from '@nestjs/swagger';
 // import { MintTokenDto } from './dtos/mintToken.dto';
 // import { ApiProperty } from '@nestjs/swagger';
 
@@ -13,19 +14,20 @@ import { AppService } from './app.service';
 //   address: string;
 // }
 
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/')
   getHello() {
-    // : Promise<string>
     return this.appService.getHello();
   }
 
-  @Get('/block-number')
+  @Get('/block-number') // : Promise<string>
   async getBlockNumber() {
-    return this.appService.getBlockNumber();
+    return { result: await this.appService.getBlockNumber() };
   }
 
   @Get('/contract-address')
@@ -48,12 +50,23 @@ export class AppController {
     return { result: await this.appService.getTotalSupply() };
   }
 
+  @Get('/contract-creator-address')
+  getContractCreatorAddress() {
+    return { result: this.appService.getContractCreatorAddress() };
+  }
+
+  @Get('/contract-creator-address-balance')
+  async getContractCreatorAddressBalance() {
+    return { result: await this.appService.getContractCreatorAddressBalance() };
+  }
+
   @Get('/check-minter-role')
-  async checkMinterRole(@Query('address') address: string) {
+  @ApiQuery({ name: 'address', type: String, required: false })
+  async checkMinterRole(@Query('address') address: string = ADDRESS_ZERO) {
     return { result: await this.appService.checkMinterRole(address) };
   }
 
-  // @Post('mint-tokens')
+  // @Post('/mint-tokens')
   // async mintTokens(@Body() body: MintTokenDto) {
   //   return { result: await this.appService.mintTokens(body.address) };
   // }
