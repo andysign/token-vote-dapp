@@ -17,7 +17,7 @@ export const WalletInfo = () => {
         <p>Your account address is {address}</p>
         <p>Connected to the network {chain?.name}</p>
         {/* <WalletAction></WalletAction> */}
-        <WalletBalance address={address}></WalletBalance>
+        <WalletBalance address={address as `0x${string}`}></WalletBalance>
       </div>
     );
   if (isConnecting)

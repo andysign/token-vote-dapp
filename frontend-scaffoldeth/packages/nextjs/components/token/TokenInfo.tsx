@@ -93,6 +93,6 @@ function TokenName() {
 
 function TokenBalance({ isLoading, isError, balance }: TokenBalanceComponent) {
   if (isLoading) return <div>Fetching balance…</div>;
-  if (isError) return <div>Error fetching balance</div>;
-  return <div>Balance: {balance.toString()}</div>;
+  if (isError) return <div>Error fetching token balance. Pls connect wlt!</div>;
+  return <div>Balance (MTK): {balance.toString()}</div>;
 }
