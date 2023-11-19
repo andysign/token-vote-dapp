@@ -13,7 +13,11 @@ export const TokenizedBallotVote = () => {
 
   const onSubmit = async () => {
     setLoading(true);
-    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/vote`)
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/vote`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ proposal: selectedOption }), // WIP
+    })
       .then(res => res.json())
       .then(data => {
         if (data && data.result) setMessage(`Success ! you voted for ${selectedOption}`);
