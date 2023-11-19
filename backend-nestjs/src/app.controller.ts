@@ -83,7 +83,12 @@ export class AppController {
   }
 
   @Post('/deploy-ballot')
-  async deploy(@Body() body: DeployBallotDto) {
+  async deployBallot(@Body() body: DeployBallotDto) {
     return { result: await this.appService.deployBallot(body?.proposalsArr) };
+  }
+
+  @Get('/contract-ballot-address')
+  getContractBallotAddress() {
+    return { result: this.appService.getContractBallotAddress() };
   }
 }

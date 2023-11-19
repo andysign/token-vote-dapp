@@ -25,7 +25,11 @@ let AppService = class AppService {
         this.provider = new ethers_1.ethers.JsonRpcProvider(this.configService.get('RPC_ENDPOINT_URL', process.env.RPC_ENDPOINT_URL));
         this.wallet = new ethers_1.ethers.Wallet(this.prvKey, this.provider);
         this.contract = new ethers_1.ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
-        this.ctbAddr = fs.readFileSync(`./.env.deployed`).toString().split('=')[1];
+        this.ctbAddr = fs
+            .readFileSync(`./.env.deployed`)
+            .toString()
+            .split('=')[1]
+            .trim();
     }
     getHello() {
         return `Backend App Running OK. Go to .../api/ for more!`;
@@ -98,8 +102,12 @@ let AppService = class AppService {
         const depTx = tokenizedBallot.deploymentTransaction();
         const str = 'CTB_ADDRESS=' + ballotAddr;
         fs.writeFileSync(`./.env.deployed`, str);
-        console.log(this.ctbAddr);
         return { deploymentTx: depTx.hash, contractAddress: ballotAddr };
+    }
+    getContractBallotAddress() {
+        const a = fs.readFileSync(`.env.deployed`).toString().split('=')[1].trim();
+        this.ctbAddr = a;
+        return this.ctbAddr;
     }
 };
 exports.AppService = AppService;

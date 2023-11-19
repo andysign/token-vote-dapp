@@ -24,4 +24,5 @@ export declare class AppService {
         deploymentTx: string;
         contractAddress: string | ethers.Addressable;
     }>;
+    getContractBallotAddress(): any;
 }
