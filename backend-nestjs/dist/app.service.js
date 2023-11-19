@@ -13,6 +13,8 @@ exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 const ethers_1 = require("ethers");
 const tokenJson = require("./assets/MyToken.json");
+const ballotJson = require("./assets/TokenizedBallot.json");
+const fs = require("fs");
 const config_1 = require("@nestjs/config");
 let AppService = class AppService {
     constructor(configService) {
@@ -23,6 +25,7 @@ let AppService = class AppService {
         this.provider = new ethers_1.ethers.JsonRpcProvider(this.configService.get('RPC_ENDPOINT_URL', process.env.RPC_ENDPOINT_URL));
         this.wallet = new ethers_1.ethers.Wallet(this.prvKey, this.provider);
         this.contract = new ethers_1.ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
+        this.ctbAddr = fs.readFileSync(`./.env.deployed`).toString().split('=')[1];
     }
     getHello() {
         return `Backend App Running OK. Go to .../api/ for more!`;
@@ -82,35 +85,21 @@ let AppService = class AppService {
         await tx.wait();
         return tx;
     }
-    async deployTokenizedBallot() {
-        const { wallet: wlt } = this;
-        const data = '0x608060405234801561001057600080fd5b506040' +
-            '5161012e38038061012e8339818101604052604081' +
-            '101561003357600080fd5b81019080805190602001' +
-            '909291908051906020019092919050505081600160' +
-            '006101000a81548173ffffffffffffffffffffffff' +
-            'ffffffffffffffff021916908373ffffffffffffff' +
-            'ffffffffffffffffffffffffff1602179055508060' +
-            '008190555050506088806100a66000396000f3fe60' +
-            '80604052348015600f57600080fd5b506004361060' +
-            '285760003560e01c80633fa4f24514602d575b6000' +
-            '80fd5b60336049565b604051808281526020019150' +
-            '5060405180910390f35b6000805490509056fea264' +
-            '6970667358221220926465385af0e8706644e1ff3d' +
-            'b7161af699dc063beaadd55405f2ccd6478d756473' +
-            '6f6c63430007040033000000000000000000000000' +
-            '5555763613a12d8f3e73be831dff8598089d3dca00' +
-            '000000000000000000000000000000000000000000' +
-            '0000000000000000002a';
-        const abi = [
-            'constructor(address owner, uint256 initialValue)',
-            'function value() view returns (uint)',
-        ];
-        const contractFactory = new ethers_1.ethers.ContractFactory(abi, data, wlt);
-        const tx = await contractFactory.deploy('0x0000000000000000000000000000000000000001', 42);
-        await tx.waitForDeployment();
-        const ctAddress = await tx.getAddress();
-        return ctAddress;
+    async deployBallot(proposalsArr) {
+        const { wallet: wlt, provider, ctAddr: tokenAddr } = this;
+        const { bytecode, abi } = ballotJson;
+        const proposalsStr = proposalsArr?.length ? proposalsArr : ['P1', 'P2'];
+        const proposals = proposalsStr.map(ethers_1.ethers.encodeBytes32String);
+        const blockNum = (await provider.getBlockNumber()) || 1;
+        const tokenizedBallotFactory = new ethers_1.ethers.ContractFactory(abi, bytecode, wlt);
+        const tokenizedBallot = await tokenizedBallotFactory.deploy(proposals, tokenAddr, blockNum);
+        await tokenizedBallot.waitForDeployment();
+        const ballotAddr = tokenizedBallot.target;
+        const depTx = tokenizedBallot.deploymentTransaction();
+        const str = 'CTB_ADDRESS=' + ballotAddr;
+        fs.writeFileSync(`./.env.deployed`, str);
+        console.log(this.ctbAddr);
+        return { deploymentTx: depTx.hash, contractAddress: ballotAddr };
     }
 };
 exports.AppService = AppService;

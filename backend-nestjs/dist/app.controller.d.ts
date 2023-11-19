@@ -1,5 +1,6 @@
 import { AppService } from './app.service';
 import { MintTokenDto } from './dtos/mintToken.dto';
+import { DeployBallotDto } from './dtos/deployBallot.dto';
 export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
@@ -31,7 +32,10 @@ export declare class AppController {
     mintTokens(body: MintTokenDto): Promise<{
         result: any;
     }>;
-    deploy(): Promise<{
-        result: string;
+    deploy(body: DeployBallotDto): Promise<{
+        result: {
+            deploymentTx: string;
+            contractAddress: string | import("ethers").Addressable;
+        };
     }>;
 }
