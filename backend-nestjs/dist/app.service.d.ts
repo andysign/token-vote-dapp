@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { ConfigService } from '@nestjs/config';
 export declare class AppService {
     private configService;
@@ -7,6 +8,8 @@ export declare class AppService {
     private provider;
     private wallet;
     private contract;
+    private ctbAddr;
+    private ctbAbi;
     constructor(configService: ConfigService);
     getHello(): string;
     getBlockNumber(): Promise<number>;
@@ -14,6 +17,14 @@ export declare class AppService {
     getContractAbi(): any;
     getTokenName(): Promise<string>;
     getTotalSupply(): Promise<any>;
-    getServerWalletAddress(): string;
-    checkMinterRole(addr: string): Promise<any>;
+    getContractCreatorAddress(): string;
+    getContractCreatorAddressBalance(): Promise<string>;
+    checkMinterRole(a: string): Promise<any>;
+    mintTokens(a: string): Promise<any>;
+    deployBallot(proposalsArr: string[]): Promise<{
+        deploymentTx: string;
+        contractAddress: string | ethers.Addressable;
+    }>;
+    getContractBallotAddress(): any;
+    getContractBallotAbi(): any;
 }

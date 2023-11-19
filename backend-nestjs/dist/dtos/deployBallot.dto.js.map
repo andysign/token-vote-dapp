@@ -1,0 +1,1 @@
+{"version":3,"file":"deployBallot.dto.js","sourceRoot":"","sources":["../../src/dtos/deployBallot.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6CAA8C;AAE9C,MAAa,eAAe;CAQ3B;AARD,0CAQC;AADC;IANC,IAAA,qBAAW,EAAC;QACX,WAAW,EAAE,sCAAsC;QACnD,OAAO,EAAE,IAAI;QACb,OAAO,EAAE,CAAC,WAAW,EAAE,WAAW,CAAC;QACnC,IAAI,EAAE,CAAC,MAAM,CAAC;KACf,CAAC;;qDACqB"}
