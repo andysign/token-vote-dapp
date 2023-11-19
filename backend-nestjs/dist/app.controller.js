@@ -16,6 +16,7 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const swagger_1 = require("@nestjs/swagger");
+const mintToken_dto_1 = require("./dtos/mintToken.dto");
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 let AppController = class AppController {
     constructor(appService) {
@@ -47,6 +48,12 @@ let AppController = class AppController {
     }
     async checkMinterRole(address = ADDRESS_ZERO) {
         return { result: await this.appService.checkMinterRole(address) };
+    }
+    async mintTokens(body) {
+        return { result: await this.appService.mintTokens(body.address) };
+    }
+    async deploy() {
+        return { result: await this.appService.deployTokenizedBallot() };
     }
 };
 exports.AppController = AppController;
@@ -106,6 +113,19 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "checkMinterRole", null);
+__decorate([
+    (0, common_1.Post)('/mint-tokens'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [mintToken_dto_1.MintTokenDto]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "mintTokens", null);
+__decorate([
+    (0, common_1.Post)('/deploy-tokenized-ballot'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "deploy", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])

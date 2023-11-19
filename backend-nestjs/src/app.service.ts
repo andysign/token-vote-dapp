@@ -94,13 +94,14 @@ export class AppService {
     return hasRole;
   }
 
-  // async mintTokens(body) {
-  //   const { contract } = this;
-  //   const { address } = body;
-  //   const amountBN = BigInt(1 * 10 ** 18);
-  //   const amount = amountBN.toString();
-  //   const tx = await contract.mint(address, amount);
-  //   await tx.await();
-  //   return tx;
-  // }
+  async mintTokens(a: string) {
+    const { contract } = this;
+    const { ZeroAddress: zeroAddress } = ethers;
+    const address = a !== zeroAddress ? a : await this.wallet.getAddress();
+    const amountBN = BigInt(1 * 10 ** 18);
+    const amount = amountBN.toString();
+    const tx = await contract.mint(address, amount);
+    await tx.wait();
+    return tx;
+  }
 }

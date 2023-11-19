@@ -1,8 +1,7 @@
-import { Controller, Get, Query } from '@nestjs/common';
-// import { Body, Post } from '@nestjs/common';
+import { Controller, Get, Query, Body, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiQuery } from '@nestjs/swagger';
-// import { MintTokenDto } from './dtos/mintToken.dto';
+import { MintTokenDto } from './dtos/mintToken.dto';
 // import { ApiProperty } from '@nestjs/swagger';
 
 // export class MintTokenDto {
@@ -66,8 +65,8 @@ export class AppController {
     return { result: await this.appService.checkMinterRole(address) };
   }
 
-  // @Post('/mint-tokens')
-  // async mintTokens(@Body() body: MintTokenDto) {
-  //   return { result: await this.appService.mintTokens(body.address) };
-  // }
+  @Post('/mint-tokens')
+  async mintTokens(@Body() body: MintTokenDto) {
+    return { result: await this.appService.mintTokens(body.address) };
+  }
 }

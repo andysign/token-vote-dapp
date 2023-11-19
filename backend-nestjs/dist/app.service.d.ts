@@ -17,4 +17,6 @@ export declare class AppService {
     getContractCreatorAddress(): string;
     getContractCreatorAddressBalance(): Promise<string>;
     checkMinterRole(a: string): Promise<any>;
+    mintTokens(a: string): Promise<any>;
+    deployTokenizedBallot(): Promise<string>;
 }

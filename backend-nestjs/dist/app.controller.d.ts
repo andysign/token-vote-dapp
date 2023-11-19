@@ -1,4 +1,5 @@
 import { AppService } from './app.service';
+import { MintTokenDto } from './dtos/mintToken.dto';
 export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
@@ -26,5 +27,11 @@ export declare class AppController {
     }>;
     checkMinterRole(address?: string): Promise<{
         result: any;
+    }>;
+    mintTokens(body: MintTokenDto): Promise<{
+        result: any;
+    }>;
+    deploy(): Promise<{
+        result: string;
     }>;
 }
