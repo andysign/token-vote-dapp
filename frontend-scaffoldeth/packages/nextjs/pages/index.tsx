@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 function PageBody() {
   return (
     <>
-      <p className="text-center text-lg"> My Wallet informations </p>
+      <p className="text-center text-lg"> My Wallet information </p>
       <WalletInfo />
       <br /> <TokenInfo />
       <br />
