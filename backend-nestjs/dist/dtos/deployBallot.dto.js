@@ -9,18 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MintTokenDto = void 0;
+exports.DeployBallotDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-class MintTokenDto {
+class DeployBallotDto {
 }
-exports.MintTokenDto = MintTokenDto;
+exports.DeployBallotDto = DeployBallotDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'Mint one MTK for the user or for self if user is 0x0.',
-        type: String,
-        required: true,
-        default: '0x0000000000000000000000000000000000000000',
+        description: 'Deploy the TokenizedBallot contract.',
+        isArray: true,
+        default: ['Proposal1', 'Proposal2'],
+        type: [String],
     }),
-    __metadata("design:type", String)
-], MintTokenDto.prototype, "address", void 0);
-//# sourceMappingURL=mintToken.dto.js.map
+    __metadata("design:type", Array)
+], DeployBallotDto.prototype, "proposalsArr", void 0);
+//# sourceMappingURL=deployBallot.dto.js.map

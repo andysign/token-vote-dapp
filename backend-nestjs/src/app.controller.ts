@@ -1,9 +1,12 @@
-import { Controller, Get, Query } from '@nestjs/common';
-// import { Body, Post } from '@nestjs/common';
+import { Controller, Get, Query, Body, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiQuery } from '@nestjs/swagger';
-// import { MintTokenDto } from './dtos/mintToken.dto';
+import { MintTokenDto } from './dtos/mintToken.dto';
+import { DeployBallotDto } from './dtos/deployBallot.dto';
 // import { ApiProperty } from '@nestjs/swagger';
+// import { ApiOperation } from '@nestjs/swagger';
+
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 
 // export class MintTokenDto {
 //   @ApiProperty({
@@ -14,7 +17,15 @@ import { ApiQuery } from '@nestjs/swagger';
 //   address: string;
 // }
 
-const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
+// export class DeployBallotDto {
+//   @ApiProperty({
+//     description: 'Deploy the TokenizedBallot contract.',
+//     isArray: true,
+//     default: ['Proposal1', 'Proposal2'],
+//     type: [String],
+//   })
+//   proposalsArr: string[];
+// }
 
 @Controller()
 export class AppController {
@@ -66,8 +77,13 @@ export class AppController {
     return { result: await this.appService.checkMinterRole(address) };
   }
 
-  // @Post('/mint-tokens')
-  // async mintTokens(@Body() body: MintTokenDto) {
-  //   return { result: await this.appService.mintTokens(body.address) };
-  // }
+  @Post('/mint-tokens')
+  async mintTokens(@Body() body: MintTokenDto) {
+    return { result: await this.appService.mintTokens(body.address) };
+  }
+
+  @Post('/deploy-ballot')
+  async deploy(@Body() body: DeployBallotDto) {
+    return { result: await this.appService.deployBallot(body?.proposalsArr) };
+  }
 }

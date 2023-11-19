@@ -14,6 +14,8 @@ RUN mkdir ./dist/
 
 COPY ./.env ./.env
 
+COPY ./.env.deployed ./.env.deployed
+
 COPY ./dist/ ./dist/
 
 EXPOSE 8080

@@ -13,6 +13,8 @@ exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 const ethers_1 = require("ethers");
 const tokenJson = require("./assets/MyToken.json");
+const ballotJson = require("./assets/TokenizedBallot.json");
+const fs = require("fs");
 const config_1 = require("@nestjs/config");
 let AppService = class AppService {
     constructor(configService) {
@@ -23,6 +25,7 @@ let AppService = class AppService {
         this.provider = new ethers_1.ethers.JsonRpcProvider(this.configService.get('RPC_ENDPOINT_URL', process.env.RPC_ENDPOINT_URL));
         this.wallet = new ethers_1.ethers.Wallet(this.prvKey, this.provider);
         this.contract = new ethers_1.ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
+        this.ctbAddr = fs.readFileSync(`./.env.deployed`).toString().split('=')[1];
     }
     getHello() {
         return `Backend App Running OK. Go to .../api/ for more!`;
@@ -71,6 +74,32 @@ let AppService = class AppService {
         const minterRole = roleHash;
         const hasRole = await contract.hasRole(minterRole, addrFinal);
         return hasRole;
+    }
+    async mintTokens(a) {
+        const { contract } = this;
+        const { ZeroAddress: zeroAddress } = ethers_1.ethers;
+        const address = a !== zeroAddress ? a : await this.wallet.getAddress();
+        const amountBN = BigInt(1 * 10 ** 18);
+        const amount = amountBN.toString();
+        const tx = await contract.mint(address, amount);
+        await tx.wait();
+        return tx;
+    }
+    async deployBallot(proposalsArr) {
+        const { wallet: wlt, provider, ctAddr: tokenAddr } = this;
+        const { bytecode, abi } = ballotJson;
+        const proposalsStr = proposalsArr?.length ? proposalsArr : ['P1', 'P2'];
+        const proposals = proposalsStr.map(ethers_1.ethers.encodeBytes32String);
+        const blockNum = (await provider.getBlockNumber()) || 1;
+        const tokenizedBallotFactory = new ethers_1.ethers.ContractFactory(abi, bytecode, wlt);
+        const tokenizedBallot = await tokenizedBallotFactory.deploy(proposals, tokenAddr, blockNum);
+        await tokenizedBallot.waitForDeployment();
+        const ballotAddr = tokenizedBallot.target;
+        const depTx = tokenizedBallot.deploymentTransaction();
+        const str = 'CTB_ADDRESS=' + ballotAddr;
+        fs.writeFileSync(`./.env.deployed`, str);
+        console.log(this.ctbAddr);
+        return { deploymentTx: depTx.hash, contractAddress: ballotAddr };
     }
 };
 exports.AppService = AppService;
