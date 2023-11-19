@@ -20,6 +20,8 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const setNativeCurrencyPrice = useGlobalState(state => state.setNativeCurrencyPrice);
   // This variable is required for initial client side rendering of correct theme for RainbowKit
   const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [showChild, setShowChild] = useState(false);
+
   const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
@@ -32,25 +34,36 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
     setIsDarkTheme(isDarkMode);
   }, [isDarkMode]);
 
-  return (
-    <WagmiConfig config={wagmiConfig}>
-      <NextNProgress />
-      <RainbowKitProvider
-        chains={appChains.chains}
-        avatar={BlockieAvatar}
-        theme={isDarkTheme ? darkTheme() : lightTheme()}
-      >
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="relative flex flex-col flex-1">
-            <Component {...pageProps} />
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
-      </RainbowKitProvider>
-    </WagmiConfig>
-  );
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
+
+  if (!showChild) {
+    return null;
+  }
+  if (typeof window === "undefined") {
+    return <></>;
+  } else {
+    return (
+      <WagmiConfig config={wagmiConfig}>
+        <NextNProgress />
+        <RainbowKitProvider
+          chains={appChains.chains}
+          avatar={BlockieAvatar}
+          theme={isDarkTheme ? darkTheme() : lightTheme()}
+        >
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="relative flex flex-col flex-1">
+              <Component {...pageProps} />
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    );
+  }
 };
 
 export default ScaffoldEthApp;

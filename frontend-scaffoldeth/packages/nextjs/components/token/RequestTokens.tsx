@@ -30,7 +30,7 @@ export const RequestTokens = (params: { address: string }) => {
                 });
             }}
           >
-            Request 1000000 tokens
+            Request tokens
           </button>
         </div>
       </div>

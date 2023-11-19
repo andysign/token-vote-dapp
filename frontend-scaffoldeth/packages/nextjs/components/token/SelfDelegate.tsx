@@ -7,8 +7,9 @@ interface SelfDelegateComponent {
 export const SelfDelegate = ({ address, canSelfDelegate }: SelfDelegateComponent) => {
   const [data, setData] = useState<{ result: boolean }>();
   const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const body = { to: address };
+  const body = { address: address };
 
   if (isLoading) return <p>Self Delegating ...</p>;
   if (!data)
@@ -16,7 +17,7 @@ export const SelfDelegate = ({ address, canSelfDelegate }: SelfDelegateComponent
       <div className="card  bg-primary text-primary-content mt-4">
         <div className="card-body">
           <h2 className="card-title">
-            <p className="text-center">Self Delegating (only available if user has balance)</p>
+            <p className="text-center">Self Delegating</p>
           </h2>
           <button
             disabled={!canSelfDelegate}
@@ -32,18 +33,22 @@ export const SelfDelegate = ({ address, canSelfDelegate }: SelfDelegateComponent
                 .then(data => {
                   setData(data);
                   setLoading(false);
-                });
+                })
+                .catch(error => setError(error));
             }}
           >
             Self Delegating
           </button>
+          {!canSelfDelegate && (
+            <div className="text-error">You cannot self delegate yet, you dont have enough tokens</div>
+          )}
         </div>
       </div>
     );
 
   return (
     <div>
-      <p>Result from API: {data.result ? "worked" : "failed"}</p>
+      <p>Result : {data.result ? "worked" : error}</p>
     </div>
   );
 };

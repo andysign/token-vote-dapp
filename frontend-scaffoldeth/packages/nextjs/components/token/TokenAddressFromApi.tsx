@@ -18,11 +18,9 @@ export const TokenAddressFromApi = () => {
 
   return (
     <div>
-      <p>
-        Token address from API:
-        <br />
-        <p style={{ fontWeight: "bold" }}>{data.result}</p>
-      </p>
+      Token address from API:
+      <br />
+      <p style={{ fontWeight: "bold" }}>{data.result}</p>
     </div>
   );
 };
