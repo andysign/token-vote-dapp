@@ -18,6 +18,7 @@ export class AppService {
   private wallet: ethers.Wallet;
   private contract: ethers.Contract;
   private ctbAddr: any;
+  private ctbAbi: any;
 
   constructor(private configService: ConfigService) {
     this.ctAddr = this.configService.get<string>(
@@ -37,7 +38,12 @@ export class AppService {
     );
     this.wallet = new ethers.Wallet(this.prvKey, this.provider);
     this.contract = new ethers.Contract(this.ctAddr, this.ctAbi, this.wallet);
-    this.ctbAddr = fs.readFileSync(`./.env.deployed`).toString().split('=')[1];
+    this.ctbAddr = fs
+      .readFileSync(`./.env.deployed`)
+      .toString()
+      .split('=')[1]
+      .trim();
+    this.ctbAbi = ballotJson.abi;
   }
 
   getHello() {
@@ -131,5 +137,16 @@ export class AppService {
     const str = 'CTB_ADDRESS=' + ballotAddr;
     fs.writeFileSync(`./.env.deployed`, str);
     return { deploymentTx: depTx.hash, contractAddress: ballotAddr };
+  }
+
+  getContractBallotAddress() {
+    const a = fs.readFileSync(`.env.deployed`).toString().split('=')[1].trim();
+    this.ctbAddr = a;
+    return this.ctbAddr;
+  }
+
+  getContractBallotAbi() {
+    const { ctbAbi } = this;
+    return ctbAbi;
   }
 }

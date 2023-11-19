@@ -32,10 +32,16 @@ export declare class AppController {
     mintTokens(body: MintTokenDto): Promise<{
         result: any;
     }>;
-    deploy(body: DeployBallotDto): Promise<{
+    deployBallot(body: DeployBallotDto): Promise<{
         result: {
             deploymentTx: string;
             contractAddress: string | import("ethers").Addressable;
         };
     }>;
+    getContractBallotAddress(): {
+        result: any;
+    };
+    getContractBallotAbi(): {
+        result: any;
+    };
 }

@@ -53,8 +53,14 @@ let AppController = class AppController {
     async mintTokens(body) {
         return { result: await this.appService.mintTokens(body.address) };
     }
-    async deploy(body) {
+    async deployBallot(body) {
         return { result: await this.appService.deployBallot(body?.proposalsArr) };
+    }
+    getContractBallotAddress() {
+        return { result: this.appService.getContractBallotAddress() };
+    }
+    getContractBallotAbi() {
+        return { result: this.appService.getContractBallotAbi() };
     }
 };
 exports.AppController = AppController;
@@ -127,7 +133,19 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [deployBallot_dto_1.DeployBallotDto]),
     __metadata("design:returntype", Promise)
-], AppController.prototype, "deploy", null);
+], AppController.prototype, "deployBallot", null);
+__decorate([
+    (0, common_1.Get)('/contract-ballot-address'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getContractBallotAddress", null);
+__decorate([
+    (0, common_1.Get)('/contract-ballot-abi'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getContractBallotAbi", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
