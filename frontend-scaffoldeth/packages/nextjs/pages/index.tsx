@@ -25,7 +25,8 @@ function PageBody() {
     <>
       <p className="text-center text-lg"> My Wallet information </p>
       <WalletInfo />
-      <br /> <TokenInfo />
+      <br />
+      <TokenInfo />
       <br />
       <TokenizedBallotPage />
     </>
