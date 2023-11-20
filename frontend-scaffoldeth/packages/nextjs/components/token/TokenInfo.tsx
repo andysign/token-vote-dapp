@@ -39,7 +39,7 @@ export const TokenInfo = () => {
   });
 
   const balance = typeof data === "number" || typeof data === "bigint" ? data : 0;
-  const hasBalance = balance !== 0;
+  const hasBalance = Number(balance) !== 0;
 
   return (
     <>
