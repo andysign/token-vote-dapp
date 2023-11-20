@@ -1,4 +1,4 @@
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { useContractWrite, usePrepareContractWrite, useAccount } from "wagmi";
 // import { useState } from "react";
 
 interface SelfDelegateComponent {
@@ -25,7 +25,7 @@ export const SelfDelegate = ({address, canSelfDelegate}: SelfDelegateComponent) 
       }
     ],
     functionName: 'delegate',
-    args: [address],
+    args: [useAccount().address],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
