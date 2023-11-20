@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { DeployCard } from "./DeployCard";
-import { TokenizedBallotInformation } from "./TokenizedBallotInformation";
+import { TokenizedBallotCard } from "./TokenizedBallotCard";
+import { TokenizedBallotGeneralInformation } from "./TokenizedBallotGeneralInformation";
 
 export interface TokenizedBallotInfo {
   name: string;
   address: `0x${string}`;
 }
+
 export const TokenizedBallotPage = ({}) => {
   const [tokenizedBallot, setTokenizedBallot] = useState<TokenizedBallotInfo>();
   const [tokenizedBallotAbi, setTokenizedBallotAbi] = useState();
@@ -31,14 +33,22 @@ export const TokenizedBallotPage = ({}) => {
       .catch(error => console.log(error));
   };
 
-  const isDeployed = tokenizedBallot?.address ?? false;
+  // const isDeployed = tokenizedBallot?.address ?? false;
 
   useEffect(() => {
     fetchTokenizedBallotInfo();
     fetchTokenizedBallotAbi();
   }, []);
   if (isLoading || !tokenizedBallot || !tokenizedBallotAbi) return <p>Fetching Tokenized Ballot contract...</p>;
-  if (!isDeployed) return <DeployCard />;
+  return (
+    <>
+      <TokenizedBallotGeneralInformation tokenizedBallot={tokenizedBallot} tokenizedBallotAbi={tokenizedBallotAbi} />
+      <DeployCard />
+      <TokenizedBallotCard tokenizedBallot={tokenizedBallot} tokenizedBallotAbi={tokenizedBallotAbi} />
+    </>
+  );
 
-  return <TokenizedBallotInformation tokenizedBallot={tokenizedBallot} tokenizedBallotAbi={tokenizedBallotAbi} />;
+  // if (!isDeployed) return <DeployCard />;
+
+  // return <TokenizedBallotInformation tokenizedBallot={tokenizedBallot} tokenizedBallotAbi={tokenizedBallotAbi} />;
 };

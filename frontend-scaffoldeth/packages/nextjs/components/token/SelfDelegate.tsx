@@ -1,10 +1,68 @@
-import { useState } from "react";
+import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
+
+// import { useState } from "react";
 
 interface SelfDelegateComponent {
   address: `0x${string}`;
   canSelfDelegate: boolean;
 }
+
 export const SelfDelegate = ({ address, canSelfDelegate }: SelfDelegateComponent) => {
+  const { config } = usePrepareContractWrite({
+    address: address,
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "delegatee",
+            type: "address",
+          },
+        ],
+        name: "delegate",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+    ],
+    functionName: "delegate",
+    args: [useAccount().address],
+  });
+  const { data, isLoading, isSuccess, write } = useContractWrite(config);
+
+  return (
+    <>
+      <div className="card  bg-primary text-primary-content mt-4">
+        <h3 className="card-title">
+          <small>Can delegate (hasBalance):</small>
+          <span>{canSelfDelegate ? "Yes" : "No"}</span>
+        </h3>
+        <div className="card-body">
+          <form onSubmit={e => e.preventDefault()}>
+            <fieldset disabled={!canSelfDelegate}>
+              <div className="card bg-primary text-primary-content mt-4">
+                <button disabled={!write} onClick={() => write?.()} className="btn btn-active btn-neutral">
+                  Self Delegating
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div className="card-footer text-xs text-warning text-sm">
+          <small>
+            <code style={{ whiteSpace: "pre-wrap" }}>
+              {isLoading && <>Loading..</>}
+              {isSuccess && <>Tx: {JSON.stringify(data)}</>}{" "}
+            </code>
+          </small>
+        </div>
+      </div>
+    </>
+  );
+};
+
+/*
+const SelfDelegate2 = ({ address, canSelfDelegate }: SelfDelegateComponent ) => {
   const [data, setData] = useState<{ result: boolean }>();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -52,3 +110,4 @@ export const SelfDelegate = ({ address, canSelfDelegate }: SelfDelegateComponent
     </div>
   );
 };
+*/

@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:18
+FROM node:18-alpine
 
 ENV NODE_ENV=production
 
@@ -13,6 +13,8 @@ RUN npm install --production
 RUN mkdir ./dist/
 
 COPY ./.env ./.env
+
+COPY ./.env.deployed ./.env.deployed
 
 COPY ./dist/ ./dist/
 

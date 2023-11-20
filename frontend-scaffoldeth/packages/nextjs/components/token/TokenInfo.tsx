@@ -39,7 +39,7 @@ export const TokenInfo = () => {
   });
 
   const balance = typeof data === "number" || typeof data === "bigint" ? data : 0;
-  const hasBalance = balance !== 0;
+  const hasBalance = Number(balance) !== 0;
 
   return (
     <>
@@ -55,7 +55,7 @@ export const TokenInfo = () => {
 
       <div className="card  bg-primary text-primary-content mt-4">
         <div className="card-body">
-          <SelfDelegate address={address as `0x${string}`} canSelfDelegate={hasBalance} />
+          <SelfDelegate address={process.env.NEXT_PUBLIC_TOKEN_ADDRESS as `0x${string}`} canSelfDelegate={hasBalance} />
         </div>
       </div>
     </>
