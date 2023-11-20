@@ -62,7 +62,7 @@ export const DeployCard = ({}) => {
             ))}
           </div>
         ) : (
-          <div>You cannot deploy Tokenized Ballot yet, total supply is inferior to the minimum requested </div>
+          <div>You cannot deploy Tokenized Ballot yet, total supply is less than the minimum requested </div>
         )}
       </div>
       <div className="card-footer text-xs py-4 text-center text-warning">

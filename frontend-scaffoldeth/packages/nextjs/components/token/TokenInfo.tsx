@@ -46,7 +46,7 @@ export const TokenInfo = () => {
       <div className="card  bg-primary text-primary-content mt-4">
         <div className="card-body">
           <h2 className="card-title">MyToken Infos : </h2>
-          <TokenName></TokenName>
+          <TokenName />
           <TokenBalance isLoading={isLoading} isError={isError} balance={balance}></TokenBalance>
           <TokenAddressFromApi></TokenAddressFromApi>
           <RequestTokens address={address as `0x${string}`}></RequestTokens>
