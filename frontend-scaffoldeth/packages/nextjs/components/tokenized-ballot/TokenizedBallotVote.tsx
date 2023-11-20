@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
+
 // import { useState } from "react";
 // import { DEFAULT_PROPOSALS } from "./DeployCard";
 
-export const TokenizedBallotVote = ({tokenizedBallot, tokenizedBallotAbi, votingPower}: any) => {
+export const TokenizedBallotVote = ({ tokenizedBallot, tokenizedBallotAbi, votingPower }: any) => {
   // Declare a new state variable, which we'll call "inputValue"
-  const [inputValue, setInputValue] = useState('0');
+  const [inputValue, setInputValue] = useState("0");
 
   const { config } = usePrepareContractWrite({
     address: tokenizedBallot?.address,
     abi: tokenizedBallotAbi,
-    functionName: 'vote',
-    args: [inputValue, votingPower ],
+    functionName: "vote",
+    args: [inputValue, votingPower],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
@@ -20,7 +21,7 @@ export const TokenizedBallotVote = ({tokenizedBallot, tokenizedBallotAbi, voting
       <div className="card bg-primary text-primary-content mt-4">
         <div className="card-body">
           <h3 className="card-title form-horizontal text-center m-0">
-            <form onSubmit={e => { e.preventDefault() }} className="col-sm-2">
+            <form onSubmit={e => e.preventDefault()} className="col-sm-2">
               <fieldset>
                 <label className="mx-6">Vote Proposal Index:</label>
                 <input
@@ -29,29 +30,27 @@ export const TokenizedBallotVote = ({tokenizedBallot, tokenizedBallotAbi, voting
                   min={0}
                   max={4}
                   value={inputValue}
-                  onChange={(e) => { setInputValue(e.target.value) }}
+                  onChange={e => setInputValue(e.target.value)}
                 />
-                <button
-                  disabled={!write}
-                  className="btn btn-active btn-neutral"
-                  onClick={() => write?.()}>Submit</button>
+                <button disabled={!write} className="btn btn-active btn-neutral" onClick={() => write?.()}>
+                  Submit
+                </button>
               </fieldset>
             </form>
           </h3>
         </div>
         <div className="card-footer text-xs text-warning text-sm">
           <small>
-            <code style={{whiteSpace: "pre-wrap"}}>
+            <code style={{ whiteSpace: "pre-wrap" }}>
               {isLoading && <>Loading..</>}
-              {isSuccess && <>Tx: {JSON.stringify(data)}</>}
-              {' '}
+              {isSuccess && <>Transaction: {JSON.stringify(data)}</>}{" "}
             </code>
           </small>
         </div>
       </div>
     </>
   );
-}
+};
 
 /*
 export const TokenizedBallotVote = () => {

@@ -46,10 +46,10 @@ export const DeployCard = ({}) => {
     <div className="card bg-primary text-primary-content mt-4">
       <div className="card-body">
         <h2 className="card-title">
-          <p className="text-center">Total supply : {(BigInt(totalSupply) / BigInt(10**18)).toString()} MTK</p>
+          <p className="text-center">Total supply : {(BigInt(totalSupply) / BigInt(10 ** 18)).toString()} MTK</p>
         </h2>
         <h3>
-          <p className="text-center">Threshold : {(BigInt(THRESHOLD) / BigInt(10**18)).toString()} MTK</p>
+          <p className="text-center">Threshold : {(BigInt(THRESHOLD) / BigInt(10 ** 18)).toString()} MTK</p>
         </h3>
         {canDeploy ? (
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
@@ -67,10 +67,7 @@ export const DeployCard = ({}) => {
       </div>
       <div className="card-footer text-xs py-4 text-center text-warning">
         <small>
-          <code style={{whiteSpace: "pre-wrap"}}>
-            {tx && <>{JSON.stringify(tx).split(",")[1]}</>}
-            {' '}
-          </code>
+          <code style={{ whiteSpace: "pre-wrap" }}> {tx && <>{JSON.stringify(tx).split(",")[1]}</>} </code>
         </small>
       </div>
     </div>
