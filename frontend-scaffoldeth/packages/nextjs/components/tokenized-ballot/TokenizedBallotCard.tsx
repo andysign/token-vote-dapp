@@ -4,8 +4,6 @@ import { TokenizedBallotWinner } from "./TokenizedBallotWinner";
 // import { TokenizedBallotInfo } from "./TokenizedBallotPage";
 import { useAccount, useContractRead } from "wagmi";
 
-// import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
-
 export const TokenizedBallotCard = ({ tokenizedBallot, tokenizedBallotAbi }: any) => {
   const { data: votingPower } = useContractRead({
     address: tokenizedBallot.address,
