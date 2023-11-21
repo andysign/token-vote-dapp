@@ -22,17 +22,17 @@
 
 ---
 
-## Description
+## Overview
 
 Created using [Nest](https://github.com/nestjs/nest) framework.
 
 ---
 
-# Description
+## Description
 
-The first backend version, configured to run on port **`8080`**.
+The first backend version, configured to run on port in DEV mode on **`localhost`** on port **`8080`**.
 
-This one has a `Dockerfile`. This docker build is useful because whenever a merge to main happens the a docker container will be build, all the files from **`./distil/`** will be added in it and that docker will become available at **[https://tokenvotedapp-9jc31xz7.b4a.run/](https://tokenvotedapp-9jc31xz7.b4a.run/)** on port **`80`**.
+This one has a **`Dockerfile`**. This docker build is useful because whenever a merge to main happens the a docker container will be build, all the files from **`./distil/`** will be added in it and that docker will become available at **[https://tokenvotedapp-9jc31xz7.b4a.run/](https://tokenvotedapp-9jc31xz7.b4a.run/)** on port **`80`**.
 
 Run with:
 
@@ -56,18 +56,28 @@ npm run build
 
 ---
 
-## Running the app
+## Running The App
+
+Start in DEV mode.
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# debug mode
-$ npm run start:debug
+# debug mode ( with private key extracted from Hardhat Node )
+PRIVATE_KEY="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" RPC_ENDPOINT_URL="http://127.0.0.1:8545" TOKEN_ADDRESS="0x5FbDB2315678afecb367f032d93F642f64180aa3" npm run start:dev
+# OR
+# npm run start:debug
 ```
+
+To build the distilled, aka _./distil/_ backend ( the back2app DOT com platform will pick the files out automatically from the `main` branch and rebuild the container ), use ( after putting the correct information inside the **`.env`** file ) the following:
+
+```sh
+npm run build
+```
+
+---
+
+## Screenshots
+
+<img width="1111" alt="image" src="https://github.com/andysign/token-vote-dapp/assets/11134288/b22bc331-53a2-4ed5-983d-6a3b936cc785">
 
 ---
 
@@ -77,21 +87,21 @@ Although the tests are not done, they can be run with
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
 ---
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Contact the repository owner.
 
---
+---
 
 ---
