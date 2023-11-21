@@ -61,6 +61,26 @@ In order to suppress some bugs that keep popping when trying to execute `next ex
 
 Exported the first set of static page files.
 
+## Components
+
+```
+Home
+• PageBody
+  WalletInfo
+  • TokenInfo
+      TokenName
+      TokenBalance
+      TokenAddressFromApi
+      RequestTokens
+      SelfDelegate
+  • TokenizedBallotPage
+      TokenizedBallotGeneralInformation
+      DeployCard
+  • TokenizedBallotCard
+      TokenizedBallotVote
+      TokenizedBallotWinner
+```
+
 ## Contributing
 
 Contact the repository owner.
